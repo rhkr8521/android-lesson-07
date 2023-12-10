@@ -26,14 +26,12 @@ public class UserAuthEndpoint {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody UserDataEntity entity) {
         try {
-            // 로그인을 시도합니다.
-            return ResponseEntity.ok(userDataService.createTokenWith(entity));
+            UserAuthenticationDto authDto = userDataService.createTokenWith(entity);
+            return ResponseEntity.ok(authDto);
         } catch (Exception ex) {
-            // 만약 로그인에 실패했다면, 400 Bad Request를 반환합니다.
             return ResponseEntity.badRequest().body(new ExceptionalResultDto(ex.getMessage()));
         }
     }
-
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(HttpServletRequest request) {

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 // 이 클래스를 컨트롤러로 선언합니다.
 @Controller
 @RequiredArgsConstructor
@@ -15,11 +17,18 @@ public class BaseWebController {
         return new ModelAndView("main.html");
     }
 
+    @RequestMapping("/logout")
+    public String onLogout(HttpServletRequest request) {
+        // 세션 무효화
+        request.getSession().invalidate();
+        // 로그인 페이지로 리다이렉트
+        return "redirect:/login";
+    }
+
     @RequestMapping("/login")
     public ModelAndView onLogin() {
         return new ModelAndView("login.html");
     }
-
 
     @RequestMapping("/register")
     public ModelAndView onRegister() {
